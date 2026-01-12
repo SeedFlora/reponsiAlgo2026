@@ -1,0 +1,578 @@
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                    VARIASI SOAL & SOLUSI SEARCHING & SORTING                 ║
+║                    Program Responsif Algoritma Profesional                     ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+
+═══════════════════════════════════════════════════════════════════════════════
+BAGIAN 1: SOAL SEARCHING (Variasi dari soal original)
+═══════════════════════════════════════════════════════════════════════════════
+
+
+▶ VARIASI SOAL 1 - BINARY SEARCH (Data Terurut)
+─────────────────────────────────────────────────────────────────────────────
+
+SOAL:
+Diberikan deretan angka berikut:
+5, 12, 18, 23, 35, 41, 48, 52, 67, 78, 89, 95
+
+Tentukan algoritma searching yang paling tepat untuk mencari nilai 52, 
+kemudian jelaskan langkah-langkah pencarian (step-by-step) berdasarkan 
+source code yang diberikan, bandingkan cara kerja kedua algoritma (Linear 
+vs Binary Search), serta simpulkan algoritma mana yang paling cepat dan 
+paling sesuai untuk kasus tersebut beserta alasan pemilihannya.
+
+
+JAWABAN & ANALISIS:
+
+1. ALGORITMA TERBAIK: BINARY SEARCH ✓
+
+2. ALASAN PEMILIHAN:
+   • Data SUDAH TERURUT (ascending)
+   • Jumlah data cukup besar (12 elemen)
+   • Binary Search memanfaatkan keterurutan data
+   • Kompleksitas O(log n) jauh lebih baik dari O(n)
+
+3. LANGKAH-LANGKAH PENCARIAN (Step-by-Step):
+
+   Binary Search Execution:
+   ┌─────────────────────────────────────────────────────────┐
+   │ Data: 5, 12, 18, 23, 35, 41, 48, 52, 67, 78, 89, 95    │
+   │ Indeks: 0  1   2   3   4   5   6   7   8   9  10  11   │
+   │ Target: 52                                              │
+   └─────────────────────────────────────────────────────────┘
+
+   ITERASI 1:
+   • left = 0, right = 11
+   • mid = (0 + 11) / 2 = 5
+   • arr[5] = 41
+   • 41 < 52 → target ada di sebelah KANAN
+   • Update: left = 6
+
+   ITERASI 2:
+   • left = 6, right = 11
+   • mid = (6 + 11) / 2 = 8
+   • arr[8] = 67
+   • 67 > 52 → target ada di sebelah KIRI
+   • Update: right = 7
+
+   ITERASI 3:
+   • left = 6, right = 7
+   • mid = (6 + 7) / 2 = 6
+   • arr[6] = 48
+   • 48 < 52 → target ada di sebelah KANAN
+   • Update: left = 7
+
+   ITERASI 4:
+   • left = 7, right = 7
+   • mid = (7 + 7) / 2 = 7
+   • arr[7] = 52 ✓ KETEMU!
+   • Nilai 52 ditemukan di indeks 7
+
+   Total Steps: 4 perbandingan
+   Kompleksitas: O(log 12) ≈ 4
+
+
+4. PERBANDINGAN BINARY vs LINEAR SEARCH:
+
+   ┌──────────────────┬────────────────┬──────────────────┐
+   │ Aspek            │ LINEAR SEARCH  │ BINARY SEARCH    │
+   ├──────────────────┼────────────────┼──────────────────┤
+   │ Langkah untuk 52 │ 8 perbandingan │ 4 perbandingan   │
+   │ Worst Case       │ 12 steps       │ 4 steps          │
+   │ Kompleksitas     │ O(n)           │ O(log n)         │
+   │ Syarat Data      │ Boleh acak     │ HARUS terurut    │
+   │ Setup awal       │ Tidak perlu    │ Perlu sorting    │
+   │ Best for         │ Data kecil     │ Data besar       │
+   └──────────────────┴────────────────┴──────────────────┘
+
+   Visualisasi Perbandingan:
+   
+   Linear Search untuk mencari 52:
+   [5][12][18][23][35][41][48][52]✓
+    1   2   3   4   5   6   7   8
+
+   Binary Search untuk mencari 52:
+   Step 1: Check tengah... 41? No, cari kanan
+           [5][12][18][23][35][41] [48][52][67][78][89][95]
+                                    ↑
+   Step 2: Check tengah kanan... 67? No, cari kiri
+           [48][52] [67][78][89][95]
+                ↑
+   Step 3: Check tengah... 48? No, cari kanan
+           [52]✓
+            ↑
+
+
+5. KESIMPULAN:
+   • ALGORITMA TERBAIK: BINARY SEARCH
+   • ALASAN:
+     - Data terurut, jadi bisa maksimalkan Binary Search
+     - 4 steps vs 8 steps = 50% lebih cepat
+     - Scalable: untuk 1 juta data, hanya ~20 steps
+   • REKOMENDASI:
+     - Jika data terurut: Selalu gunakan BINARY SEARCH
+     - Jika data berubah sering: Pertimbangkan performa sort
+
+
+
+
+▶ VARIASI SOAL 2 - LINEAR SEARCH (Data Tidak Terurut)
+─────────────────────────────────────────────────────────────────────────────
+
+SOAL:
+Diberikan deretan angka berikut:
+15, 7, 42, 3, 89, 21, 56, 33, 71, 8
+
+Tentukan algoritma searching yang paling tepat untuk mencari nilai 56, 
+kemudian jelaskan langkah-langkah pencarian (step-by-step) berdasarkan 
+source code yang diberikan, bandingkan cara kerja kedua algoritma, serta 
+simpulkan algoritma mana yang paling cepat dan paling sesuai untuk kasus 
+tersebut beserta alasan pemilihannya.
+
+
+JAWABAN & ANALISIS:
+
+1. ALGORITMA TERBAIK: LINEAR SEARCH ✓ (WAJIB)
+
+2. ALASAN PEMILIHAN:
+   • Data TIDAK TERURUT (random order)
+   • Binary Search TIDAK BISA digunakan tanpa sorting dulu
+   • Sorting dulu akan lebih expensive daripada linear search
+   • Linear Search adalah satu-satunya pilihan praktis
+
+3. LANGKAH-LANGKAH PENCARIAN (Step-by-Step):
+
+   Linear Search Execution:
+   ┌─────────────────────────────────────────┐
+   │ Data: 15, 7, 42, 3, 89, 21, 56, 33, 71, 8 │
+   │ Indeks: 0  1  2  3  4   5   6   7   8  9 │
+   │ Target: 56                               │
+   └─────────────────────────────────────────┘
+
+   Step 1: Bandingkan arr[0] = 15 dengan 56
+           15 ≠ 56 → Lanjut ke elemen berikutnya
+
+   Step 2: Bandingkan arr[1] = 7 dengan 56
+           7 ≠ 56 → Lanjut
+
+   Step 3: Bandingkan arr[2] = 42 dengan 56
+           42 ≠ 56 → Lanjut
+
+   Step 4: Bandingkan arr[3] = 3 dengan 56
+           3 ≠ 56 → Lanjut
+
+   Step 5: Bandingkan arr[4] = 89 dengan 56
+           89 ≠ 56 → Lanjut
+
+   Step 6: Bandingkan arr[5] = 21 dengan 56
+           21 ≠ 56 → Lanjut
+
+   Step 7: Bandingkan arr[6] = 56 dengan 56
+           56 = 56 ✓ KETEMU!
+           Nilai 56 ditemukan di indeks 6
+
+   Total Steps: 7 perbandingan
+   Kompleksitas: O(10) = linear
+
+
+4. PERBANDINGAN JIKA TERPAKSA PAKAI BINARY SEARCH:
+
+   Skenario: Sort dulu baru binary search
+   
+   a) Sort array (Merge Sort untuk efisien)
+      Data original: 15, 7, 42, 3, 89, 21, 56, 33, 71, 8
+      Data sorted:   3, 7, 8, 15, 21, 33, 42, 56, 71, 89
+      Cost: ~30 operasi (O(n log n))
+
+   b) Binary Search di data sorted
+      Binary Search untuk 56: ~4 operasi (O(log n))
+      
+   c) Total cost: 30 + 4 = 34 operasi
+      vs Linear Search: 7 operasi
+
+   ✗ TIDAK EFISIEN! Linear Search 5x lebih cepat!
+
+
+5. PERBANDINGAN DIRECT:
+
+   ┌──────────────────┬────────────────┬──────────────────┐
+   │ Aspek            │ LINEAR SEARCH  │ BINARY SEARCH    │
+   ├──────────────────┼────────────────┼──────────────────┤
+   │ Langkah untuk 56 │ 7 perbandingan │ Tidak bisa!      │
+   │ (data acak)      │ (jika gunakan) │ (perlu sort)     │
+   │ Worst Case       │ 10 steps       │ 30+4=34 steps    │
+   │ Kompleksitas     │ O(n)           │ O(n log n)       │
+   │ Syarat Data      │ Boleh acak ✓   │ Harus terurut ✗  │
+   │ Setup awal       │ Tidak perlu    │ Perlu sorting    │
+   │ Best for         │ Data acak ✓    │ Data terurut     │
+   └──────────────────┴────────────────┴──────────────────┘
+
+
+6. KESIMPULAN:
+   • ALGORITMA TERBAIK: LINEAR SEARCH
+   • ALASAN:
+     - Data tidak terurut, tidak ada pilihan lain yang efisien
+     - Direct search lebih cepat daripada sort + binary search
+     - Sederhana dan straightforward
+   • REKOMENDASI:
+     - Untuk data acak & hanya dicari sekali: LINEAR SEARCH
+     - Untuk data acak & dicari berkali-kali: 
+       Sort dulu sekali, pakai BINARY SEARCH berulang kali
+
+
+
+
+═══════════════════════════════════════════════════════════════════════════════
+BAGIAN 2: SOAL SORTING (Variasi dari soal original)
+═══════════════════════════════════════════════════════════════════════════════
+
+
+▶ VARIASI SOAL 1 - KECIL DATASET
+─────────────────────────────────────────────────────────────────────────────
+
+SOAL:
+Diberikan deretan angka berikut:
+42, 17, 93, 25, 68, 31, 56
+
+Tentukan algoritma sorting yang paling tepat untuk mengurutkan data tersebut, 
+kemudian jelaskan proses pengurutan secara bertahap (step-by-step) berdasarkan 
+source code yang diberikan, bandingkan cara kerja kedua algoritma, serta 
+simpulkan algoritma mana yang lebih cepat dan lebih efisien beserta alasan 
+pemilihannya.
+
+
+JAWABAN & ANALISIS:
+
+1. ALGORITMA TERBAIK: BUBBLE SORT (untuk kasus ini)
+
+2. ALASAN PEMILIHAN:
+   • Dataset sangat kecil (7 elemen)
+   • Bubble Sort cukup cepat untuk dataset kecil
+   • Kode lebih sederhana dan mudah dipahami
+   • Overhead memory Merge Sort tidak perlu
+
+
+3. LANGKAH-LANGKAH PENGURUTAN BUBBLE SORT (Step-by-Step):
+
+   Data awal: 42, 17, 93, 25, 68, 31, 56
+
+   ═══════════════════════════════════════════════════════
+   PASS 1 (Elemen terbesar "menggelembung" ke akhir)
+   ═══════════════════════════════════════════════════════
+   
+   Dibandingkan [42][17] → 42 > 17, TUKAR
+   Hasil: 17, 42, 93, 25, 68, 31, 56
+   
+   Dibandingkan [42][93] → 42 < 93, OK
+   Hasil: 17, 42, 93, 25, 68, 31, 56
+   
+   Dibandingkan [93][25] → 93 > 25, TUKAR
+   Hasil: 17, 42, 25, 93, 68, 31, 56
+   
+   Dibandingkan [93][68] → 93 > 68, TUKAR
+   Hasil: 17, 42, 25, 68, 93, 31, 56
+   
+   Dibandingkan [93][31] → 93 > 31, TUKAR
+   Hasil: 17, 42, 25, 68, 31, 93, 56
+   
+   Dibandingkan [93][56] → 93 > 56, TUKAR
+   Hasil: 17, 42, 25, 68, 31, 56, 93
+   
+   ✓ 93 sudah di posisi akhir (benar!)
+
+   ═══════════════════════════════════════════════════════
+   PASS 2 (Elemen 2 terbesar ke posisi 2 akhir)
+   ═══════════════════════════════════════════════════════
+   
+   Dibandingkan [17][42] → 17 < 42, OK
+   Hasil: 17, 42, 25, 68, 31, 56, 93
+   
+   Dibandingkan [42][25] → 42 > 25, TUKAR
+   Hasil: 17, 25, 42, 68, 31, 56, 93
+   
+   Dibandingkan [42][68] → 42 < 68, OK
+   Hasil: 17, 25, 42, 68, 31, 56, 93
+   
+   Dibandingkan [68][31] → 68 > 31, TUKAR
+   Hasil: 17, 25, 42, 31, 68, 56, 93
+   
+   Dibandingkan [68][56] → 68 > 56, TUKAR
+   Hasil: 17, 25, 42, 31, 56, 68, 93
+   
+   ✓ 68 sudah berada di posisi yang benar
+
+   ═══════════════════════════════════════════════════════
+   PASS 3, 4, 5, 6 (Proses berlanjut...)
+   ═══════════════════════════════════════════════════════
+   
+   [Proses serupa sampai seluruh data terurut]
+
+   HASIL AKHIR: 17, 25, 31, 42, 56, 68, 93 ✓
+
+
+4. LANGKAH-LANGKAH PENGURUTAN MERGE SORT (Step-by-Step):
+
+   Data awal: 42, 17, 93, 25, 68, 31, 56
+
+   ═══════════════════════════════════════════════════════
+   TAHAP DIVIDE (Pembagian)
+   ═══════════════════════════════════════════════════════
+
+   Level 0: [42, 17, 93, 25, 68, 31, 56]
+            Bagi dua menjadi:
+            
+   Level 1: [42, 17, 93, 25] dan [68, 31, 56]
+            Bagi lagi menjadi:
+            
+   Level 2: [42, 17][93, 25] dan [68, 31][56]
+            Bagi lagi menjadi:
+            
+   Level 3: [42][17][93][25] dan [68][31][56]
+            Setiap elemen sudah tunggal, stop dividing
+
+   ═══════════════════════════════════════════════════════
+   TAHAP MERGE (Penggabungan & Pengurutan)
+   ═══════════════════════════════════════════════════════
+
+   Merge [42] + [17]:
+   - Bandingkan 42 vs 17 → 17 < 42
+   - Hasil: [17, 42]
+
+   Merge [93] + [25]:
+   - Bandingkan 93 vs 25 → 25 < 93
+   - Hasil: [25, 93]
+
+   Merge [68] + [31]:
+   - Bandingkan 68 vs 31 → 31 < 68
+   - Hasil: [31, 68]
+
+   Merge [17, 42] + [25, 93]:
+   - Bandingkan 17 vs 25 → 17 lebih kecil, ambil 17
+   - Bandingkan 42 vs 25 → 25 lebih kecil, ambil 25
+   - Bandingkan 42 vs 93 → 42 lebih kecil, ambil 42
+   - Sisa 93, ambil 93
+   - Hasil: [17, 25, 42, 93]
+
+   Merge [31, 68] + [56]:
+   - Bandingkan 31 vs 56 → 31 lebih kecil, ambil 31
+   - Bandingkan 68 vs 56 → 56 lebih kecil, ambil 56
+   - Sisa 68, ambil 68
+   - Hasil: [31, 56, 68]
+
+   Merge [17, 25, 42, 93] + [31, 56, 68]:
+   - Proses merge final
+   - Hasil: [17, 25, 31, 42, 56, 68, 93] ✓
+
+
+5. PERBANDINGAN BUBBLE SORT vs MERGE SORT:
+
+   ┌──────────────────────┬──────────────┬──────────────┐
+   │ Aspek                │ BUBBLE SORT  │ MERGE SORT   │
+   ├──────────────────────┼──────────────┼──────────────┤
+   │ Untuk 7 elemen       │ ~21 operasi  │ ~20 operasi  │
+   │ Waktu kompleksitas   │ O(n²) = 49   │ O(n log n)=21│
+   │ Perbandingan terukur │ 21           │ ~15          │
+   │ Memory yang dipakai   │ O(1) in-place│ O(n) baru    │
+   │ Setup                │ Langsung     │ Perlu alloc  │
+   │ Best case            │ O(n) sorted  │ O(n log n)   │
+   │ Worst case           │ O(n²)        │ O(n log n)   │
+   └──────────────────────┴──────────────┴──────────────┘
+
+   Untuk 7 elemen: Relatif sama cepat
+   Perbedaan signifikan muncul saat data lebih banyak:
+   
+   • 10 elemen:   ~45 vs ~30 operasi
+   • 100 elemen:  ~5000 vs ~700 operasi
+   • 1000 elemen: ~500,000 vs ~10,000 operasi
+
+
+6. KESIMPULAN:
+   • ALGORITMA TERBAIK: BUBBLE SORT (untuk dataset kecil)
+   • ALASAN:
+     - Dataset kecil, perbedaan performa minimal
+     - Bubble Sort lebih sederhana dan in-place (tidak butuh memory extra)
+     - Overhead Merge Sort tidak sebanding manfaatnya
+     - Kode lebih mudah dipahami dan diimplementasi
+   • REKOMENDASI:
+     - Data < 100 elemen: BUBBLE SORT boleh, praktis
+     - Data > 100 elemen: MERGE SORT lebih baik
+     - Produksi modern: Gunakan Quick Sort atau library sort()
+
+
+
+
+▶ VARIASI SOAL 2 - MEDIUM DATASET
+─────────────────────────────────────────────────────────────────────────────
+
+SOAL:
+Diberikan deretan angka berikut:
+89, 12, 56, 34, 78, 23, 45, 67, 11, 90
+
+Tentukan algoritma sorting yang paling tepat untuk mengurutkan data tersebut, 
+kemudian jelaskan proses pengurutan secara bertahap (step-by-step) berdasarkan 
+source code yang diberikan, bandingkan cara kerja kedua algoritma, serta 
+simpulkan algoritma mana yang lebih cepat dan lebih efisien beserta alasan 
+pemilihannya.
+
+
+JAWABAN & ANALISIS:
+
+1. ALGORITMA TERBAIK: MERGE SORT ✓
+
+2. ALASAN PEMILIHAN:
+   • Dataset medium size (10 elemen)
+   • Mulai terlihat perbedaan performa (Bubble ~45 vs Merge ~30)
+   • Merge Sort mulai lebih efficient
+   • Performa konsisten O(n log n) terlepas kondisi data
+
+
+3. PERBANDINGAN BUBBLE SORT vs MERGE SORT (10 elemen):
+
+   ┌──────────────────────┬──────────────┬──────────────┐
+   │ Aspek                │ BUBBLE SORT  │ MERGE SORT   │
+   ├──────────────────────┼──────────────┼──────────────┤
+   │ Total operasi        │ ~45          │ ~30          │
+   │ Best case (sorted)   │ ~9 (cepat!)  │ ~30 (sama)   │
+   │ Worst case (reverse) │ ~45 (lambat) │ ~30 (sama)   │
+   │ Rata-rata (random)   │ ~45          │ ~30          │
+   │ Memory overhead      │ O(1)         │ O(10)        │
+   │ Stabil?              │ Ya           │ Ya           │
+   │ In-place?            │ Ya           │ Tidak        │
+   └──────────────────────┴──────────────┴──────────────┘
+
+   Visualisasi Performa:
+   
+   Bubble Sort (10 elem):
+   Pass 1: ████████████████████ 20 steps
+   Pass 2: ████████████████     15 steps
+   Pass 3: ██████████           10 steps
+   Total:  ████████████████████ ~45 steps
+
+   Merge Sort (10 elem):
+   Divide: █████                ~10 steps (log dividing)
+   Merge:  ████████████         ~20 steps (merging)
+   Total:  █████████████████    ~30 steps
+
+
+4. KARAKTERISTIK TIAP ALGORITMA:
+
+   BUBBLE SORT - "Naif tapi Sederhana":
+   ✓ Mudah dimengerti
+   ✓ Tidak perlu memory extra
+   ✗ Lambat untuk data besar
+   ✗ Worst case sangat buruk (reverse sorted)
+   
+   MERGE SORT - "Divide & Conquer Powerful":
+   ✓ Cepat dan konsisten
+   ✓ Scalable untuk dataset besar
+   ✓ Worst case sama baik (O(n log n))
+   ✗ Perlu memory extra O(n)
+   ✗ Sedikit lebih kompleks
+
+
+5. ANALISIS SCALABILITY:
+
+   Dataset Size │ Bubble Sort │ Merge Sort │ Rasio
+   ──────────────┼─────────────┼────────────┼──────
+   10 elemen    │ ~45         │ ~30        │ 1.5x
+   50 elemen    │ ~1,250      │ ~250       │ 5x
+   100 elemen   │ ~5,000      │ ~700       │ 7x
+   1,000 elemen │ ~500,000    │ ~10,000    │ 50x
+   10,000 elemen│ ~50,000,000 │ ~130,000   │ 385x
+
+   Kesimpulan: Semakin besar dataset, semakin signifikan keuntungan Merge Sort!
+
+
+6. KESIMPULAN FINAL:
+   
+   • ALGORITMA TERBAIK: MERGE SORT
+   
+   • ALASAN UTAMA:
+     1. Lebih cepat untuk 10 elemen (30 vs 45 operasi)
+     2. Scalable: akan jauh lebih cepat jika data bertambah
+     3. Konsistensi: O(n log n) tanpa peduli kondisi data
+     4. Best practice: industri standar untuk sorting
+   
+   • REKOMENDASI PRAKTIS:
+     - Data < 10: Boleh Bubble Sort (tidak signifikan)
+     - Data 10-100: Lebih baik Merge Sort atau Quick Sort
+     - Data > 100: HARUS Merge Sort, Quick Sort, atau Heap Sort
+     - Produksi: Gunakan library sort() dari bahasa pemrograman
+
+
+
+
+═══════════════════════════════════════════════════════════════════════════════
+RINGKASAN PERBANDINGAN KESELURUHAN
+═══════════════════════════════════════════════════════════════════════════════
+
+SEARCHING:
+┌────────────────────────────────────────────────────────────────┐
+│ Kondisi Data      │ Pilihan Terbaik   │ Alasan              │
+├────────────────────┼────────────────────┼─────────────────────┤
+│ Terurut           │ Binary Search      │ O(log n) sangat    │
+│ (seperti Soal 1)  │                    │ cepat!              │
+│────────────────────┼────────────────────┼─────────────────────┤
+│ Tidak Terurut     │ Linear Search      │ Tidak bisa binary  │
+│ (seperti Soal 2)  │                    │ tanpa sort dulu    │
+│────────────────────┼────────────────────┼─────────────────────┤
+│ Dicari berkali-kali│ Sort + Binary      │ Sort sekali, search│
+│ (hybrid)          │ Search             │ berkali murah       │
+└────────────────────┴────────────────────┴─────────────────────┘
+
+
+SORTING:
+┌────────────────────────────────────────────────────────────────┐
+│ Jumlah Data       │ Pilihan Terbaik   │ Alasan              │
+├────────────────────┼────────────────────┼─────────────────────┤
+│ < 50 elemen       │ Bubble Sort        │ Cukup cepat,       │
+│ (seperti Soal 1)  │ atau Quick Sort    │ simple code         │
+│────────────────────┼────────────────────┼─────────────────────┤
+│ 50-10,000 elemen  │ Merge Sort atau    │ Balance performa   │
+│ (seperti Soal 2)  │ Quick Sort         │ dan kompleksitas    │
+│────────────────────┼────────────────────┼─────────────────────┤
+│ > 10,000 elemen   │ Merge Sort         │ Konsisten,         │
+│ (production)      │ atau library sort()│ scalable           │
+└────────────────────┴────────────────────┴─────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+FILE YANG TERSEDIA
+═══════════════════════════════════════════════════════════════════════════════
+
+1. searching_soal_variasi.c
+   - Program implementasi Linear Search vs Binary Search
+   - 2 variasi soal dengan visualisasi step-by-step
+   - Compile & run untuk melihat proses pencarian
+
+2. sorting_soal_variasi.c
+   - Program implementasi Bubble Sort vs Merge Sort
+   - 2 variasi soal dengan visualisasi step-by-step
+   - Compile & run untuk melihat proses pengurutan
+
+3. SOLUTION_SEARCHING_SORTING.txt (file ini)
+   - Dokumentasi lengkap dengan analisis mendalam
+   - Jawaban konseptual dan praktis untuk setiap soal
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CARA COMPILE & MENJALANKAN
+═══════════════════════════════════════════════════════════════════════════════
+
+Di Command Prompt/Terminal:
+
+Untuk Searching:
+  gcc searching_soal_variasi.c -o searching.exe
+  searching.exe
+
+Untuk Sorting:
+  gcc sorting_soal_variasi.c -o sorting.exe
+  sorting.exe
+
+Output akan menunjukkan step-by-step visualization dari kedua algoritma.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF DOCUMENT
+═══════════════════════════════════════════════════════════════════════════════
